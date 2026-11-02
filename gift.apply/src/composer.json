@@ -1,0 +1,9 @@
+{
+    "name" : "S3 Touiteur",
+
+    "autoload": {
+        "psr-4": {
+            "Touiteur\\src" : "./"
+        }
+    }
+}
