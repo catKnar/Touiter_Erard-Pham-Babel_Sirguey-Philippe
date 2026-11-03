@@ -1,9 +1,11 @@
 {
-    "name" : "S3 Touiteur",
+    "name" : "s3/touiteur",
+    "type" : "project",
 
     "autoload": {
         "psr-4": {
-            "Touiteur\\src" : "./"
+            "Touiteur\\conf\\" : "./conf",
+            "Touiteur\\" : "./src"
         }
     }
 }
