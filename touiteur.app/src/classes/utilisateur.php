@@ -14,11 +14,11 @@ class Utilisateur {
 
     public function __construct(int $id_user, string $nom, string $prenom, string $email, int $nb_touite) {
 
-    $this->id_user = $id_user;
-    $this->nom = $nom;
-    $this->prenom = $prenom;
-    $this->email = $email;
-    $this->nb_touite = $nb_touite;
+        $this->id_user = $id_user;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
+        $this->email = $email;
+        $this->nb_touite = $nb_touite;
     }
 
     public function get( string $attrname) : mixed {
