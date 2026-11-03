@@ -1,5 +1,9 @@
 <?php 
 
+namespace Touiteur\src\classes;
+
+use Exception;
+
 class Utilisateur {
 
     protected int $id_user;
