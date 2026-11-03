@@ -1,6 +1,6 @@
 <?php 
 
-namespace Touiteur\src\classes;
+namespace Touiteur\classes;
 
 use Exception;
 

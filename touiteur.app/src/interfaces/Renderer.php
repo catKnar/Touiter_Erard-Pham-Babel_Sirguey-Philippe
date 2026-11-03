@@ -1,5 +1,5 @@
 <?php
-namespace Touiteur\src\interfaces;
+namespace Touiteur\interfaces;
 interface Renderer
 {
     const COMPACT=1;

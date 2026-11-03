@@ -2,7 +2,7 @@
 
 require_once 'src/vendor/autoload.php';
 
-use Touiteur\src\classes\utilisateur;
+use Touiteur\classes\Utilisateur;
 
 $u1 = new utilisateur(333, "Eponge", "Bob", "poisson@uni.fr", 0);
 
