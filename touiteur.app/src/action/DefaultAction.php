@@ -1,8 +1,8 @@
 <?php
 
-namespace Touiter\action;
+namespace Touiteur\action;
 
-use Touiter\action\Action;
+use Touiteur\action\Action;
 
 class DefaultAction extends Action {
 
