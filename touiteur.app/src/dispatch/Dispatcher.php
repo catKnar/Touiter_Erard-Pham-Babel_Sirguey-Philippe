@@ -25,12 +25,12 @@ class Dispatcher
 body {
   margin: 0;
   padding: 0;
- 
+  background-color: #000d26; 
   
 }
 h1,h2,h3, p {
   margin: 10px;
-  color : blue;
+  color : white;
   font-family: monospace, sans-serif;
 }
 
@@ -40,7 +40,7 @@ h1,h2,h3, p {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: black;
+  background-color: #ff5500;
 }
 .navbar li {
   float: left;
