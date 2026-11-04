@@ -21,12 +21,12 @@ class TouiterRepository
 
         $driver = self::$config['driver'] ?? 'mysql';
         $host = self::$config['host'] ?? 'localhost';
-        $dbname = self::$config['dbname'] ?? '';
+        $dbname = self::$config['database'] ?? '';
         $charset = self::$config['charset'] ?? 'utf8mb4';
         $user = self::$config['username'] ?? '';
         $pass = self::$config['password'] ?? '';
 
-        $dsn = "$driver:host=$host;dbname=$dbname;charset=$charset";
+        $dsn = "$driver:host=$host;database=$dbname;charset=$charset";
 
         try {
             $this->db = new PDO($dsn, $user, $pass, [
