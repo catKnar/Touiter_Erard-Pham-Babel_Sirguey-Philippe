@@ -7,8 +7,8 @@ use Touiteur\repository\TouiterRepository;
 use Touiteur\dispatch\Dispatcher;
 
 session_start();
-
 TouiterRepository::setConfig('Config.db.ini');
+
 $Dispatcher = new Dispatcher();
 $Dispatcher->run();
 
