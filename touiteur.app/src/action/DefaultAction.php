@@ -4,7 +4,8 @@ namespace Touiteur\action;
 
 use Touiteur\action\Action;
 
-class DefaultAction extends Action {
+class DefaultAction extends Action
+{
 
     public function execute(): string
     {
@@ -17,7 +18,13 @@ class DefaultAction extends Action {
                 <title>Touiter</title>
                 <style>
                     .touite {
-                        margin: 20px;
+                        display: grid;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    p {
+                        border: 1px solid black;
                     }
                 </style>
             </head>
