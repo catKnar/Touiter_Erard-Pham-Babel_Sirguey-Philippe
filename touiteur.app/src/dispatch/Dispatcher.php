@@ -12,7 +12,7 @@ class Dispatcher
         $this->action = isset($_GET['action']) ? $_GET['action'] : null;
     }
 
-    private function renderPage(string $html):void
+    private function renderPage():void
     {
       
         $res="<html lang=\"fr\">
