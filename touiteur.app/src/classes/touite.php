@@ -4,7 +4,7 @@ namespace Touiteur\classes;
 
 use Exception;
 
-class touite {
+class Touite {
 
     protected int $id_touite;
     protected string $texte;

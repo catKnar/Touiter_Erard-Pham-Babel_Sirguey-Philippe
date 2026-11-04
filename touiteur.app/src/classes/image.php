@@ -4,7 +4,7 @@ namespace Touiteur\classes;
 
 use Exception;
 
-class image {
+class Image {
 
     protected int $id_img;
     protected string $description_image;

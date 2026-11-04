@@ -1,6 +1,6 @@
 <?php 
 
-class follower{
+class Follower{
 
  private int $id_user;
 
