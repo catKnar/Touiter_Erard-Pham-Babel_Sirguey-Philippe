@@ -24,6 +24,7 @@ class DefaultAction extends Action
                     }
 
                     p {
+                        font-family: monospace, sans-serif;
                         border: 1px solid black;
                     }
                 </style>
