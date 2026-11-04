@@ -1,5 +1,8 @@
 <?php 
 
+namespace Touiteur\classes;
+
+use Exception;
 class Follower{
 
  private int $id_user;
