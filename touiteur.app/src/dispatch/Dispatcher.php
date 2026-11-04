@@ -12,10 +12,11 @@ class Dispatcher
         $this->action = isset($_GET['action']) ? $_GET['action'] : null;
     }
 
-    private function renderPage():void
+    private function renderPage(): void
     {
-      
-        $res="<html lang=\"fr\">
+        $html = '';
+
+        $res = "<html lang=\"fr\">
 <head>
     <meta charset=\"UTF-8\">
     <title>Touiteur</title>
@@ -35,11 +36,11 @@ h2,h3, p {
         
     
     <p>Bonjour !</p>
-    ".$html."
+    " . $html . "
 </body>";
         echo $res;
     }
-    public function run():void
+    public function run(): void
     {
         $this->renderPage();
     }
