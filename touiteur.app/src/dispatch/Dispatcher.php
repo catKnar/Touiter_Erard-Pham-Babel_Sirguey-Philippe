@@ -14,13 +14,7 @@ class Dispatcher
 
     private function renderPage(string $html):void
     {
-        if(isset($_SESSION['user_id']))
-        {
-            $id=$_SESSION['user_id'];
-        }
-        else{
-            $id=0;
-        }
+      
         $res="<html lang=\"fr\">
 <head>
     <meta charset=\"UTF-8\">
@@ -40,7 +34,7 @@ h2,h3, p {
 <body>
         
     
-    <p>Bonjour, ".$id." !</p>
+    <p>Bonjour !</p>
     ".$html."
 </body>";
         echo $res;
