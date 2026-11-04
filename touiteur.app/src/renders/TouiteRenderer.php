@@ -30,7 +30,7 @@ class TouiteRenderer implements Renderer
      */
     private function renderCompact(): string
     {
-
+        return "";
     }
 
     /**
@@ -38,7 +38,7 @@ class TouiteRenderer implements Renderer
      */
     private function renderLong(): string
     {
-
+        return "";
     }
-    
+
 }

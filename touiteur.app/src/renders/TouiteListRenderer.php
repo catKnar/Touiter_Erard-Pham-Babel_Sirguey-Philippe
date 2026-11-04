@@ -3,7 +3,7 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Touite;
-use Touiteur\interface\Renderer;
+use Touiteur\interfaces\Renderer;
 
 class TouiteListRenderer implements Renderer
 {
@@ -11,7 +11,9 @@ class TouiteListRenderer implements Renderer
     private string $titre;
 
     /**
-     * 
+     * Constructor
+     * @param array $touites
+     * @param string $titre
      */
     public function __construct(array $touites, string $titre = "Liste des touites")
     {
@@ -19,6 +21,11 @@ class TouiteListRenderer implements Renderer
         $this->titre = $titre;
     }
 
+    /**
+     * Render
+     * @param int $selector
+     * @return string
+     */
     public function render(int $selector = self::COMPACT): string
     {
         $titreXSS = htmlspecialchars($this->titre);
