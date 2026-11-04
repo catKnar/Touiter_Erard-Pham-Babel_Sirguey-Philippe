@@ -1,5 +1,8 @@
 <?php 
 
+namespace Touiteur\classes;
+
+use Exception;
 
 class Tag {
 
@@ -13,7 +16,7 @@ class Tag {
    public function __construct(int $id_tag , String $lib, String $desc ){
         $this->id_tag = $id_tag;
         $this->libelle = $lib;
-        $this->libelle = $desc;
+        $this->description_tag = $desc;
    }
 
     public function get( string $attrname) : mixed {
