@@ -5,6 +5,7 @@ namespace Touiteur\repository;
 use PDO;
 use PDOException;
 use Exception;
+use Touiteur\classes\touite;
 
 class TouiterRepository
 {
@@ -73,5 +74,17 @@ class TouiterRepository
     public function getPDO(): PDO
     {
         return $this->db;
+    }
+
+    public function Affiche_liste_touites():array
+    {
+        $query="select * from touite order by date desc";
+        $stmt=$this->getPDO()->prepare($query);
+        $stmt->execute();
+        $touites = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $touites[] = new touite((int)$row['id_touite'],$row['texte'],$row['date'],(int)$row['id_user'],(int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']);
+        }
+        return $touites;
     }
 }
