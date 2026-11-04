@@ -1,5 +1,7 @@
 <?php
 
+// à laisser pour l'instant au cas où car Switch plus facile que Router 
+
 namespace Touiteur\dispatch;
 
 use Touiteur\action\DefaultAction;

@@ -4,7 +4,7 @@
 
     "autoload": {
         "psr-4": {
-            "Touiteur\\conf\\" : "./conf",
+            "Touiteur\\conf\\" : "../conf",
             "Touiteur\\" : "./"
         }
     }
