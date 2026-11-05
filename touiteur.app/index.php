@@ -11,17 +11,14 @@ use Touiteur\conf\Router;
 session_start();
 TouiterRepository::setConfig('Config.db.ini');
 
-$Dispatcher = new Router()
-->addRoute('default', DefaultAction::class);
+$Dispatcher = new Router()->addRoute('default', DefaultAction::class);
 
 try {
     echo $Dispatcher->run();
 } catch (Exception $e) {
-    echo "Oupss, erreur";
+    echo "Oupss, erreur" . $e->getMessage();
 }
 
 $u1 = new utilisateur(333, "Eponge", "Bob", "poisson@uni.fr", 0);
 
 echo $u1->toHtml();
-
-?>
