@@ -3,7 +3,7 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Image;
-use Touiteur\interface\Renderer;
+use Touiteur\interfaces\Renderer;
 
 class ImageRenderer implements Renderer
 {

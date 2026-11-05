@@ -3,7 +3,7 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Tag;
-use Touiteur\interface\Renderer;
+use Touiteur\interfaces\Renderer;
 
 class TagRenderer implements Renderer
 {
