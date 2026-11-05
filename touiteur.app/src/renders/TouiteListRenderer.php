@@ -36,6 +36,16 @@ class TouiteListRenderer implements Renderer
             return $retour;
         }
 
+        $retour .= "<ul style='list-style-type: none; padding: 0;'>";
+        foreach ($this->touites as $touite) {
+            if ($touite instanceof Touite) {
+                $renderer = new TouiteRenderer($touite);
+                $retour .= "<li>" . $renderer->render($selector) . "</li>";
+            }
+        }
+        $retour .= "</ul>";
+        $retour .= "<p>Total affiché : " . count($this->touites) . " touite(s)</p></div>";
+
         return $retour;
     }
 }
