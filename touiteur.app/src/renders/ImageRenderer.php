@@ -16,6 +16,18 @@ class ImageRenderer implements Renderer
 
     public function render(int $selector = self::COMPACT): string
     {
-        return "";
+        if ($selector === self::COMPACT) {
+            return "";
+        }
+
+        $chemin = htmlspecialchars($this->image->get('chemin_fichier'));
+        $desc = htmlspecialchars($this->image->get('description_image'));
+
+        return <<<HTML
+        <div class="touite-image" style="margin: 10px 0;">
+            <img src="{$chemin}" alt="{$desc}" style="max-width: 400px; border-radius: 5px;">
+            <p><small><em>{$desc}</em></small></p>
+        </div>
+        HTML;
     }
 }
