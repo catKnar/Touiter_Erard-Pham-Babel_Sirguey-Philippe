@@ -27,7 +27,7 @@ class TouiterRepository
         $user = self::$config['username'] ?? '';
         $pass = self::$config['password'] ?? '';
 
-        $dsn = "$driver:host=$host;database=$dbname;charset=$charset";
+        $dsn = "$driver:host=$host;dbname=$dbname;charset=$charset";
 
         try {
             $this->db = new PDO($dsn, $user, $pass, [
@@ -39,7 +39,7 @@ class TouiterRepository
         }
     }
 
-     /**
+    /**
      * Charge la configuration depuis un fichier INI
      */
     public static function setConfig(string $file): void
@@ -76,14 +76,14 @@ class TouiterRepository
         return $this->db;
     }
 
-    public function Affiche_liste_touites():array
+    public function Affiche_liste_touites(): array
     {
-        $query="select * from touite order by date desc";
-        $stmt=$this->getPDO()->prepare($query);
+        $query = "select * from touite order by date desc";
+        $stmt = $this->getPDO()->prepare($query);
         $stmt->execute();
         $touites = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $touites[] = new touite((int)$row['id_touite'],$row['texte'],$row['date'],(int)$row['id_user'],(int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']);
+            $touites[] = new touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']);
         }
         return $touites;
     }

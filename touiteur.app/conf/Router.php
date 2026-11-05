@@ -83,9 +83,10 @@ text-align: center;
 
         <h2>Bienvenue sur le site de Touiteur</h2>
 
-          ".$html."
+          ". $html ."
     
 </body>";
+
         return $res;
     }
 
@@ -95,9 +96,8 @@ text-align: center;
             $action_class = $this->actions[$this->action];
             $action = new $action_class();
             return $this->renderPage($action->execute());
-        }
-        else {
-            throw new Exception("Erreur d'action");
+        } else {
+            throw new Exception("Action '{$this->action}' not found");
         }
     }
 

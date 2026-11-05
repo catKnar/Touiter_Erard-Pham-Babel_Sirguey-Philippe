@@ -3,6 +3,7 @@
 namespace Touiteur\action;
 
 use Touiteur\action\Action;
+use Touiteur\repository\TouiterRepository;
 
 class DefaultAction extends Action
 {
@@ -25,37 +26,34 @@ class DefaultAction extends Action
 
                     p {
                         font-family: monospace, sans-serif;
-                        border: 1px solid black;
                     }
                 </style>
             </head>
             
             <body>
                 <div class="touite">
-                    <p>Le_dragon  <i><@1234</i> <br>
-                        Touiter est la meilleure application !
-                    </p>
-
-                    <p>Gérard <i><@5678</i> <br>
-                        Je recommande Touiter à tous mes amis !
-                    </p>
-
-                    <p>Marie <i><@9101</i> <br>
-                        J'adore Touiter, c'est super pratique !
-                    </p>
-
-                    <p>Jean <i><@1121</i> <br>
-                        Touiter est vraiment génial, je l'utilise tous les jours !  
-                     </p>
-
-                     <p>Lucie <i><@3141</i> <br>
-                        Je suis fan de Touiter, c'est mon application préférée !
-                    </p>
-                </div>
-            </body>
-        </html>
         HTML;
 
+        $touites = TouiterRepository::getInstance()->Affiche_liste_touites();
+        $html = '';
+
+        foreach ($touites as $t) {
+            $texte = $t->get('texte');
+            $date = $t->get('date');
+            $pouceUp = $t->get('pouceUp');
+            $pouceDown = $t->get('pouceDown');
+
+            $html .= <<<HTML
+                <p>
+                    Texte: $texte<br>
+                    Date: $date<br>
+                    like : $pouceUp  dislike : $pouceDown <br>
+                </p>
+            HTML;
+        }
+
+        $page .= $html . '</div>
+            </body>';
         return $page;
     }
 }
