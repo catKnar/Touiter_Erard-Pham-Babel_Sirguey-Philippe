@@ -6,6 +6,7 @@ use PDO;
 use PDOException;
 use Exception;
 use Touiteur\classes\touite;
+use Touiteur\classes\Image;
 
 class TouiterRepository
 {
@@ -172,4 +173,23 @@ class TouiterRepository
         return $touites;
     }
 
+
+    //affichage d'une image par id 
+    public function Affiche_image_par_id(int $id): ?Image
+    {
+        $stmt = $this->getPDO()->prepare("SELECT * FROM image WHERE id_img = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row === false) {
+            return null;
+        }
+
+        return new Image(
+            (int)$row['id_img'],
+            $row['description_image'] ?? '',
+            $row['chemin_fichier'] ?? '',
+        );
+    }
 }

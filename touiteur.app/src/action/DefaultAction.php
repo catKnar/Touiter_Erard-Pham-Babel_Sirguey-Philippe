@@ -3,6 +3,9 @@
 namespace Touiteur\action;
 
 use Touiteur\action\Action;
+use Touiteur\classes\Image;
+use Touiteur\renders\ImageRenderer;
+use Touiteur\interfaces\Renderer;
 use Touiteur\repository\TouiterRepository;
 
 class DefaultAction extends Action
@@ -34,7 +37,8 @@ class DefaultAction extends Action
                 <div class="touite">
         HTML;
 
-        $touites = TouiterRepository::getInstance()->Affiche_liste_touites();
+        $repo = TouiterRepository::getInstance();
+        $touites = $repo->Affiche_liste_touites();
         $html = '';
 
         foreach ($touites as $t) {
@@ -43,12 +47,22 @@ class DefaultAction extends Action
             $pouceUp = $t->get('pouceUp');
             $pouceDown = $t->get('pouceDown');
 
+        $htmlImage = '';
+        $idImg = $t->get('id_img');
+        if ($idImg > 0) {
+            $image = $repo->Affiche_image_par_id($idImg);
+            if ($image !== null) {
+                $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
+            }
+        }
+
             $html .= <<<HTML
                 <p>
                     Texte: $texte<br>
                     Date: $date<br>
                     like : $pouceUp  dislike : $pouceDown <br>
                 </p>
+                $htmlImage
             HTML;
         }
 
