@@ -76,6 +76,9 @@ class TouiterRepository
         return $this->db;
     }
 
+    /**
+     * Fonctionnalité 1
+     */
     public function Affiche_liste_touites(): array
     {
         $query = "select * from touite order by date desc";
@@ -87,4 +90,86 @@ class TouiterRepository
         }
         return $touites;
     }
+
+    /**
+     * Fonctionnalité 2
+     *
+     */
+    public function Affiche_touite_detail(int $id): ?Touite
+    {
+        $stmt = $this->getPDO()->prepare("SELECT * FROM touite WHERE id_touite = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row === false) {
+            return null;
+        }
+
+        return new Touite(
+            (int)$row['id_touite'],
+            $row['texte'],
+            $row['date'],
+            (int)$row['id_user'],
+            (int)$row['id_img'],
+            (int)$row['pouceUp'],
+            (int)$row['pouceDown']
+        );
+    }
+
+
+    /**
+     * Fonctionnalité 4
+     */
+    public function Afficher_Touite_Personne_donnee(int $idUser): array
+    {
+        $query = "SELECT * FROM touite WHERE id_user = ? ORDER BY date DESC";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $touites = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $touites[] = new Touite(
+                (int)$row['id_touite'],
+                $row['texte'],
+                $row['date'],
+                (int)$row['id_user'],
+                (int)$row['id_img'],
+                (int)$row['pouceUp'],
+                (int)$row['pouceDown']
+            );
+        }
+        return $touites;
+    }
+
+    /**
+     * Fonctionnalité 5
+     */
+    public function Affiche_touite_ParTag(int $idTag): array
+    {
+        $query = "SELECT t.*
+              FROM touite t
+              JOIN touite2tag tt ON tt.id_touite = t.id_touite
+              WHERE tt.id_tag = ?
+              ORDER BY t.date DESC";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $idTag, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $touites = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $touites[] = new Touite(
+                (int)$row['id_touite'],
+                $row['texte'],
+                $row['date'],
+                (int)$row['id_user'],
+                (int)$row['id_img'],
+                (int)$row['pouceUp'],
+                (int)$row['pouceDown']
+            );
+        }
+        return $touites;
+    }
+
 }
