@@ -7,6 +7,7 @@ use PDOException;
 use Exception;
 use Touiteur\classes\touite;
 use Touiteur\classes\Image;
+use Touiteur\classes\Utilisateur;
 
 class TouiterRepository
 {
@@ -82,23 +83,34 @@ class TouiterRepository
      */
     public function Affiche_liste_touites(): array
     {
-        $query = "select * from touite order by date desc";
+        $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
+              FROM touite t
+              JOIN utilisateur u ON u.id_user = t.id_user
+              ORDER BY t.date DESC";
         $stmt = $this->getPDO()->prepare($query);
         $stmt->execute();
+
         $touites = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $touites[] = new touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']);
+            $touites[] = [
+                'touite' => new Touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']),
+                'auteur' => new Utilisateur((int)$row['id_user'], $row['nom'], $row['prenom'], $row['email'], (int)$row['nb_touite'])
+            ];
         }
         return $touites;
     }
 
     /**
      * Fonctionnalité 2
-     *
      */
-    public function Affiche_touite_detail(int $id): ?Touite
+    public function Affiche_touite_detail(int $id): ?array
     {
-        $stmt = $this->getPDO()->prepare("SELECT * FROM touite WHERE id_touite = ?");
+        $stmt = $this->getPDO()->prepare(
+            "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
+         FROM touite t
+         JOIN utilisateur u ON u.id_user = t.id_user
+         WHERE t.id_touite = ?"
+        );
         $stmt->bindParam(1, $id, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -107,39 +119,32 @@ class TouiterRepository
             return null;
         }
 
-        return new Touite(
-            (int)$row['id_touite'],
-            $row['texte'],
-            $row['date'],
-            (int)$row['id_user'],
-            (int)$row['id_img'],
-            (int)$row['pouceUp'],
-            (int)$row['pouceDown']
-        );
+        return [
+            'touite' => new Touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']),
+            'auteur' => new Utilisateur((int)$row['id_user'], $row['nom'], $row['prenom'], $row['email'], (int)$row['nb_touite'])
+        ];
     }
-
 
     /**
      * Fonctionnalité 4
      */
     public function Afficher_Touite_Personne_donnee(int $idUser): array
     {
-        $query = "SELECT * FROM touite WHERE id_user = ? ORDER BY date DESC";
+        $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
+              FROM touite t
+              JOIN utilisateur u ON u.id_user = t.id_user
+              WHERE t.id_user = ?
+              ORDER BY t.date DESC";
         $stmt = $this->getPDO()->prepare($query);
         $stmt->bindParam(1, $idUser, PDO::PARAM_INT);
         $stmt->execute();
 
         $touites = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $touites[] = new Touite(
-                (int)$row['id_touite'],
-                $row['texte'],
-                $row['date'],
-                (int)$row['id_user'],
-                (int)$row['id_img'],
-                (int)$row['pouceUp'],
-                (int)$row['pouceDown']
-            );
+            $touites[] = [
+                'touite' => new Touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']),
+                'auteur' => new Utilisateur((int)$row['id_user'], $row['nom'], $row['prenom'], $row['email'], (int)$row['nb_touite'])
+            ];
         }
         return $touites;
     }
@@ -149,8 +154,9 @@ class TouiterRepository
      */
     public function Affiche_touite_ParTag(int $idTag): array
     {
-        $query = "SELECT t.*
+        $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
               FROM touite t
+              JOIN utilisateur u ON u.id_user = t.id_user
               JOIN touite2tag tt ON tt.id_touite = t.id_touite
               WHERE tt.id_tag = ?
               ORDER BY t.date DESC";
@@ -160,15 +166,10 @@ class TouiterRepository
 
         $touites = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $touites[] = new Touite(
-                (int)$row['id_touite'],
-                $row['texte'],
-                $row['date'],
-                (int)$row['id_user'],
-                (int)$row['id_img'],
-                (int)$row['pouceUp'],
-                (int)$row['pouceDown']
-            );
+            $touites[] = [
+                'touite' => new Touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']),
+                'auteur' => new Utilisateur((int)$row['id_user'], $row['nom'], $row['prenom'], $row['email'], (int)$row['nb_touite'])
+            ];
         }
         return $touites;
     }
