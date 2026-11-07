@@ -30,10 +30,17 @@ class DefaultAction extends Action
                     p {
                         font-family: monospace, sans-serif;
                     }
+
+                    h2 {
+                        margin: 10px;
+                        color: white;
+                        font-family: monospace, sans-serif;
+                    }
                 </style>
             </head>
             
             <body>
+                <h2>Bienvenue sur le site de Touiteur</h2>
                 <div class="touite">
         HTML;
 
@@ -47,14 +54,14 @@ class DefaultAction extends Action
             $pouceUp = $t->get('pouceUp');
             $pouceDown = $t->get('pouceDown');
 
-        $htmlImage = '';
-        $idImg = $t->get('id_img');
-        if ($idImg > 0) {
-            $image = $repo->Affiche_image_par_id($idImg);
-            if ($image !== null) {
-                $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
+            $htmlImage = '';
+            $idImg = $t->get('id_img');
+            if ($idImg > 0) {
+                $image = $repo->Affiche_image_par_id($idImg);
+                if ($image !== null) {
+                    $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
+                }
             }
-        }
 
             $html .= <<<HTML
                 <p>
