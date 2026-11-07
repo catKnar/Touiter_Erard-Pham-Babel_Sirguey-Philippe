@@ -77,6 +77,7 @@ text-align: center;
 <body>
         <ul class='navbar'>
         <h1>Touiteur le faux</h1>
+            <li><a href='?action=default'><h2>Accueil</h2></a></li>
             <li><a href='?action=profil'><h2>Compte</h2></a></li>
             <li><h2>Recherche</h2></li>
         </ul>

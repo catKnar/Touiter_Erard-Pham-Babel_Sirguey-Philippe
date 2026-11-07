@@ -3,15 +3,19 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Touite;
+use Touiteur\classes\Utilisateur;
 use Touiteur\interfaces\Renderer;
+use Touiteur\repository\TouiterRepository;
 
 class TouiteRenderer implements Renderer
 {
     private Touite $touite;
+    private Utilisateur $user;
 
-    public function __construct(Touite $touite)
+    public function __construct(Touite $touite, Utilisateur $user)
     {
         $this->touite = $touite;
+        $this->user = $user;
     }
 
     public function render(int $selector = self::COMPACT): string
@@ -57,8 +61,11 @@ class TouiteRenderer implements Renderer
     {
         $id = $this->touite->get('id_touite');
         $idUser = $this->touite->get('id_user');
+        $nom = $this->user->get('nom');
+        $prenom = $this->user->get('prenom');
         $date = htmlspecialchars((string)$this->touite->get('date'));
-        $texte = htmlspecialchars($this->touite->get('texte'));
+        $texte = $this->touite->get('texte');
+        $repo = TouiterRepository::getInstance();
 
         // Tags en liens cliquables
         $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u','<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $texte);
@@ -68,7 +75,8 @@ class TouiteRenderer implements Renderer
         try {
             $idImg = $this->touite->get('id_img');
             if (!empty($idImg)) {
-                $htmlImage = "<div class='touite-image'><p><em>[Image associée #{$idImg}]</em></p></div>";
+                $image = $repo->Affiche_image_par_id($idImg);
+                $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
             }
         } catch (\Exception $e) {}
 
@@ -81,7 +89,7 @@ class TouiteRenderer implements Renderer
         return <<<HTML
         <div class="touite-long" style="border: 2px solid #ff5500; margin: 15px; padding: 15px; border-radius: 8px;">
             <h3>
-                Auteur : <a href="?action=user-touites&id_user={$idUser}" style="color: #ff5500;">@Utilisateur #{$idUser}</a>
+                Auteur : <a href="?action=user-touites&id_user={$idUser}" style="color: #ff5500;">$nom $prenom #{$idUser}</a>
                 <a href="?action=follow-user&id_user={$idUser}" style="margin-left: 15px; font-size: 0.8em; color: #00ff88;">[+ Suivre cet auteur]</a>
             </h3>
             <p><small>Publié le : {$date}</small></p>
