@@ -36,6 +36,13 @@ class DefaultAction extends Action
                         color: white;
                         font-family: monospace, sans-serif;
                     }
+
+                    .touite a {
+                        color: white;
+                        text-decoration: none;
+                        font-family: monospace, sans-serif;
+                        margin-right: 10px;
+                    }
                 </style>
             </head>
             
@@ -49,12 +56,15 @@ class DefaultAction extends Action
         $html = '';
 
         foreach ($touites as $l) {
-            $t      = $l['touite'];
+            $t = $l['touite'];
             $a = $l['auteur'];
+            $id = $t->get('id_touite');
             $texte = $t->get('texte');
             $date = $t->get('date');
             $pouceUp = $t->get('pouceUp');
             $pouceDown = $t->get('pouceDown');
+            $nom = $a->get('nom');
+            $prenom = $a->get('prenom');
 
             $htmlImage = '';
             $idImg = $t->get('id_img');
@@ -66,12 +76,14 @@ class DefaultAction extends Action
             }
 
             $html .= <<<HTML
-                <p>
+                <a href='?action=detail&&id_touite=$id'> <p>
+                    Auteur : $nom $prenom <br>
                     Texte: $texte<br>
                     Date: $date<br>
                     like : $pouceUp  dislike : $pouceDown <br>
-                </p>
+                </p> 
                 $htmlImage
+                 </a>
             HTML;
         }
 
