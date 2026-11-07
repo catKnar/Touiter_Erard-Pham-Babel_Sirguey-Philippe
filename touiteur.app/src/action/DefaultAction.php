@@ -48,7 +48,9 @@ class DefaultAction extends Action
         $touites = $repo->Affiche_liste_touites();
         $html = '';
 
-        foreach ($touites as $t) {
+        foreach ($touites as $l) {
+            $t      = $l['touite'];
+            $a = $l['auteur'];
             $texte = $t->get('texte');
             $date = $t->get('date');
             $pouceUp = $t->get('pouceUp');
