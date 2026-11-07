@@ -51,7 +51,6 @@ class AfficherProfilAction extends Action
                 </style>
 
                 <div class = "profil_ent">
-                    <a href='?action=default'> <-- </a> 
                 <p> Profil : $nom $prenom <br>
                 $touite touites</p> 
                 </div>
