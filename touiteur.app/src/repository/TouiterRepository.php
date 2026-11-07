@@ -7,6 +7,7 @@ use PDOException;
 use Exception;
 use Touiteur\classes\touite;
 use Touiteur\classes\Image;
+use Touiteur\classes\Tag;
 use Touiteur\classes\Utilisateur;
 
 class TouiterRepository
@@ -192,5 +193,24 @@ class TouiterRepository
             $row['description_image'] ?? '',
             $row['chemin_fichier'] ?? '',
         );
+    }
+
+    public function Affiche_tag_par_id(int $id): Array
+    {
+        $query = "SELECT * 
+                  FROM tag
+                  JOIN hashtag on tag.id_tag = hashtag.id_tag
+                  WHERE id_touite = ?";
+        
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $tag = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tag [] = new Tag((int)$row['id_tag'], $row['libelle'], $row['description_tag']);
+        }
+
+        return $tag;
     }
 }

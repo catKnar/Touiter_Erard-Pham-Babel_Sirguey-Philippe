@@ -17,11 +17,10 @@ class AfficherTweetAction extends Action {
         $result = $repo->Affiche_touite_detail($idtouite);
 
         $tweet = $result['touite'];
-        $auteur = $result['auteur'];
 
         $html = '';
 
-        $html .= (new TouiteRenderer($tweet, $auteur))->render(Renderer::LONG);
+        $html .= (new TouiteRenderer($tweet))->render(Renderer::LONG);
 
         return $html;
     }

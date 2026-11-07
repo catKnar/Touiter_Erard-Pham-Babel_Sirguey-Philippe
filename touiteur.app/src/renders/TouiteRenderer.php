@@ -10,12 +10,10 @@ use Touiteur\repository\TouiterRepository;
 class TouiteRenderer implements Renderer
 {
     private Touite $touite;
-    private Utilisateur $user;
 
-    public function __construct(Touite $touite, Utilisateur $user)
+    public function __construct(Touite $touite)
     {
         $this->touite = $touite;
-        $this->user = $user;
     }
 
     public function render(int $selector = self::COMPACT): string
@@ -61,14 +59,24 @@ class TouiteRenderer implements Renderer
     {
         $id = $this->touite->get('id_touite');
         $idUser = $this->touite->get('id_user');
-        $nom = $this->user->get('nom');
-        $prenom = $this->user->get('prenom');
         $date = htmlspecialchars((string)$this->touite->get('date'));
         $texte = $this->touite->get('texte');
-        $repo = TouiterRepository::getInstance();
 
-        // Tags en liens cliquables
-        $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u','<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $texte);
+        $repo = TouiterRepository::getInstance();
+        $tags = $repo->Affiche_tag_par_id($id);
+        $auteur = $repo->Affiche_touite_detail($id);
+
+        $texteFormatte = '';
+        foreach($tags as $t){
+            $tag = $t->get('libelle');
+            
+            // Tags en liens cliquables
+            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u','<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $tag);
+        }
+
+        $l = $auteur['auteur'];
+        $nom = $l->get('nom');
+        $prenom = $l->get('prenom');
 
         // Gestion image
         $htmlImage = '';
@@ -93,7 +101,7 @@ class TouiteRenderer implements Renderer
                 <a href="?action=follow-user&id_user={$idUser}" style="margin-left: 15px; font-size: 0.8em; color: #00ff88;">[+ Suivre cet auteur]</a>
             </h3>
             <p><small>Publié le : {$date}</small></p>
-            <p style="font-size: 1.2em;">{$texteFormatte}</p>
+            <p style="font-size: 1.2em;">$texte {$texteFormatte}</p>
             {$htmlImage}
             {$htmlScore}
             <div class="touite-actions" style="margin-top: 10px;">
