@@ -8,6 +8,14 @@ class AfficherInfluenceursAction extends Action
 {
     public function execute(): string
     {
+        if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+            return "<div style='padding: 20px; border: 2px solid #d9084e; margin: 20px; text-align: center;'>
+                        <h2 style='color: #ff4444;'>Accès refusé</h2>
+                        <p>Cette page est réservée aux administrateurs de Touiteur.</p>
+                        <p><a href='?action=switch-admin' style='color: #00ff88;'>[Activer le mode Admin pour tester]</a></p>
+                        </div>";
+        }
+
         $repo = TouiterRepository::getInstance();
 
         try {
