@@ -8,7 +8,6 @@ use Touiteur\action\AfficherTweetAction;
 use Touiteur\action\AfficherUtilisateurProfilAction;
 use Touiteur\action\EvalueTouiteAction;
 use Touiteur\repository\TouiterRepository;
-use Touiteur\dispatch\Dispatcher;
 use Touiteur\conf\Router;
 
 session_start();
@@ -18,13 +17,14 @@ $Dispatcher = new Router();
 $Dispatcher->addRoute('default', DefaultAction::class);
 $Dispatcher->addRoute('profil', AfficherProfilAction::class);
 $Dispatcher->addRoute('detail', AfficherTweetAction::class);
+$Dispatcher->addRoute('tag-touites', AfficherListeTag::class);
 $Dispatcher->addRoute('user-touites', AfficherUtilisateurProfilAction::class);
 $Dispatcher->addRoute('evaluate-touite', EvalueTouiteAction::class);
 
 try {
     echo $Dispatcher->run();
 } catch (Exception $e) {
-    echo "Oupss, erreur" . $e->getMessage();
+    echo "Oups, erreur: " . $e->getMessage();
 }
 
 ?>

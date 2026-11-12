@@ -158,7 +158,7 @@ class TouiterRepository
         $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
               FROM touite t
               JOIN utilisateur u ON u.id_user = t.id_user
-              JOIN touite2tag tt ON tt.id_touite = t.id_touite
+              JOIN hashtag tt ON tt.id_touite = t.id_touite
               WHERE tt.id_tag = ?
               ORDER BY t.date DESC";
         $stmt = $this->getPDO()->prepare($query);
