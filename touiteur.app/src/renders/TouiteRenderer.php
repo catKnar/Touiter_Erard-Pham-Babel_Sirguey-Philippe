@@ -86,9 +86,10 @@ class TouiteRenderer implements Renderer
         $texteFormatte = '';
         foreach ($tags as $t) {
             $tag = $t->get('libelle');
+            $idTag = (int) $t->get('id_tag');
 
             // Tags en liens cliquables
-            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u', '<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $tag);
+            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u', '<a href="?action=tag-touites&id_tag=' . $idTag . '" style="color: #00bfff;">#$1</a>', $tag);
         }
 
         $l = $auteur['auteur'];
