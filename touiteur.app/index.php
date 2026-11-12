@@ -3,6 +3,7 @@
 require_once 'src/vendor/autoload.php';
 
 use Touiteur\action\AfficherInfluenceursAction;
+use Touiteur\action\SwitchAdminAction;
 use Touiteur\action\DefaultAction;
 use Touiteur\action\AfficherProfilAction;
 use Touiteur\action\AfficherTweetAction;
@@ -18,6 +19,7 @@ $Dispatcher->addRoute('default', DefaultAction::class);
 $Dispatcher->addRoute('profil', AfficherProfilAction::class);
 $Dispatcher->addRoute('detail', AfficherTweetAction::class);
 $Dispatcher->addRoute('influenceurs', AfficherInfluenceursAction::class);
+$Dispatcher->addRoute('switch-admin', SwitchAdminAction::class);
 
 try {
     echo $Dispatcher->run();
