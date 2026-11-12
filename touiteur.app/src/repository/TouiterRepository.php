@@ -175,6 +175,37 @@ class TouiterRepository
         return $touites;
     }
 
+    /**
+     * Fonctionnalité 14
+     */
+    public function getMostFollowedUsers(int $limit = 20): array 
+    {
+        $query = "SELECT u.*, COUNT(f.id_user) AS nb_suiveurs
+                    FROM utilisateur u
+                    LEFT JOIN follower f ON f.id_user_following = u.id_user
+                    GROUP BY u.id_user, u.nom, u.prenom, u.email, u.nb_touite
+                    ORDER BY nb_suiveurs ASC
+                    LIMIT ?";
+
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $influencers = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $influencers[] = [
+                'utilisateur' => new Utilisateur(
+                    (int)$row['id_user'],
+                    $row['nom'],
+                    $row['prenom'],
+                    $row['email'],
+                    (int)$row['nb_touite'],
+                ),
+                'nb_suiveurs' => (int)$row['nb_suiveurs'],
+            ];
+        }
+        return $influencers;
+    }
 
     //affichage d'une image par id 
     public function Affiche_image_par_id(int $id): ?Image
