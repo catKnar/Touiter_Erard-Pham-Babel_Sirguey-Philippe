@@ -8,7 +8,6 @@ use Touiteur\action\AfficherTweetAction;
 use Touiteur\action\AfficherUtilisateurProfilAction;
 use Touiteur\action\AfficherListeTag;
 use Touiteur\repository\TouiterRepository;
-use Touiteur\dispatch\Dispatcher;
 use Touiteur\conf\Router;
 
 session_start();

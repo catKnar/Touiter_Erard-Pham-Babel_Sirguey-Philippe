@@ -3,7 +3,6 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Touite;
-use Touiteur\classes\Utilisateur;
 use Touiteur\interfaces\Renderer;
 use Touiteur\repository\TouiterRepository;
 
@@ -37,17 +36,35 @@ class TouiteRenderer implements Renderer
         $date = htmlspecialchars((string)$this->touite->get('date'));
         $texte = htmlspecialchars($this->touite->get('texte'));
 
+        $repo = TouiterRepository::getInstance();
+        $auteur = $repo->Affiche_touite_detail($id);
+
+        $l = $auteur['auteur'];
+        $nom = $l->get('nom');
+        $prenom = $l->get('prenom');
+
+        $htmlImage = '';
+        try {
+            $idImg = $this->touite->get('id_img');
+            if (!empty($idImg)) {
+                $image = $repo->Affiche_image_par_id($idImg);
+                $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
+            }
+        } catch (\Exception $e) {}
+
         // Tronquage si texte trop long
         $apercu = mb_strlen($texte) > 100 ? mb_substr($texte, 0, 100) . "..." : $texte;
         
         return <<<HTML
         <div class="touite-compact" style="border: 1px solid #ff5500; margin: 10px; padding: 10px; border-radius: 5px;">
             <p>
-                <strong><a href="?action=user-touites&id_user={$idUser}" style="color: #ff5500;">@Utilisateur #{$idUser}</a></strong>
+                <strong><a href="?action=user-touites&id_user={$idUser}" style="color: #ff5500;">$nom $prenom #{$idUser}</a></strong>
                 <small style="color: #ccc;"> - {$date}</small>
             </p>
-            <p>{$apercu}</p>
-            <p><a href="?action=display-touite&id={$id}" style="color: #00bfff;">Voir le touite en détail →</a></p>
+            <p>{$apercu}
+                $htmlImage
+            </p>
+            <p><a href='?action=detail&&id=$id' style="color: #00bfff;">Voir le touite en détail →</a></p>
         </div>
         HTML;
     }
