@@ -158,7 +158,7 @@ class TouiterRepository
         $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
               FROM touite t
               JOIN utilisateur u ON u.id_user = t.id_user
-              JOIN touite2tag tt ON tt.id_touite = t.id_touite
+              JOIN Hashtag tt ON tt.id_touite = t.id_touite
               WHERE tt.id_tag = ?
               ORDER BY t.date DESC";
         $stmt = $this->getPDO()->prepare($query);
@@ -174,7 +174,68 @@ class TouiterRepository
         }
         return $touites;
     }
+    // Fonctionnalité 6
+    public function Ajout_Touite(int $id_user, string $texte, ?int $id_img = null): int
+    {
+        $pdo = $this->getPDO();
+        $pdo->beginTransaction();
 
+        try {
+            $stmt = $pdo->prepare(
+                "INSERT INTO touite (texte, date, id_user, id_img, pouceUp, pouceDown)
+             VALUES (?, NOW(), ?, ?, 0, 0)"
+            );
+            $stmt->bindParam(1, $texte, PDO::PARAM_STR);
+            $stmt->bindParam(2, $id_user, PDO::PARAM_INT);
+            $stmt->bindParam(3, $id_img, $id_img === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+            $stmt->execute();
+            $idTouite = (int)$pdo->lastInsertId();
+
+            $stmt = $pdo->prepare(
+                "UPDATE utilisateur SET nb_touite = nb_touite + 1 WHERE id_user = ?"
+            );
+            $stmt->bindParam(1, $id_user, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $this->extract_Tag($idTouite, $texte);
+
+            $pdo->commit();
+            return $idTouite;
+        } catch (\Exception $e) {
+            $pdo->rollBack();
+            throw $e;
+        }
+    }
+
+// Fonctionnalité 8
+    public function extract_Tag(int $idTouite, string $texte): void
+    {
+        preg_match_all('/#(\w+)/u', $texte, $matches);
+        $libelles = array_unique(array_map('mb_strtolower', $matches[1]));
+
+        $pdo = $this->getPDO();
+
+        foreach ($libelles as $libelle) {
+            // le tag existe-t-il déjà ?
+            $stmt = $pdo->prepare("SELECT id_tag FROM tag WHERE libelle = ?");
+            $stmt->bindParam(1, $libelle, PDO::PARAM_STR);
+            $stmt->execute();
+            $idTag = $stmt->fetchColumn();
+
+            if ($idTag === false) {
+                $stmt = $pdo->prepare("INSERT INTO tag (libelle, description_tag) VALUES (?, '')");
+                $stmt->bindParam(1, $libelle, PDO::PARAM_STR);
+                $stmt->execute();
+                $idTag = (int)$pdo->lastInsertId();
+            }
+
+            // lien touite <-> tag
+            $stmt = $pdo->prepare("INSERT INTO hashtag (id_touite, id_tag) VALUES (?, ?)");
+            $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
+            $stmt->bindParam(2, $idTag, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
 
     //affichage d'une image par id 
     public function Affiche_image_par_id(int $id): ?Image
