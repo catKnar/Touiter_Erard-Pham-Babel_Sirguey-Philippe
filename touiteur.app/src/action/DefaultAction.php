@@ -75,7 +75,7 @@ class DefaultAction extends Action
             }
 
             $html .= <<<HTML
-                <a href='?action=detail&&id_touite=$id'> <p>
+                <a href='?action=detail&id_touite=$id'> <p>
                     Auteur : $nom $prenom <br>
                     Texte: $texte<br>
                     Date: $date<br>
