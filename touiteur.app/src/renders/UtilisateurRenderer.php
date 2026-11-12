@@ -4,12 +4,14 @@ namespace Touiteur\renders;
 
 use Touiteur\classes\Utilisateur;
 use Touiteur\interfaces\Renderer;
+use Touiteur\repository\TouiterRepository;
 
 class UtilisateurRenderer implements Renderer
 {
     private Utilisateur $user;
 
-    public function __construct(Utilisateur $user) {
+    public function __construct(Utilisateur $user)
+    {
         $this->user = $user;
     }
 
@@ -18,13 +20,15 @@ class UtilisateurRenderer implements Renderer
      * @param int $selector
      * @return string
      */
-    public function render(int $selector = self::COMPACT): string 
+    public function render(int $selector = self::COMPACT): string
     {
         $id = $this->user->get('id_user');
         $nom = htmlspecialchars($this->user->get('nom'));
         $prenom = htmlspecialchars($this->user->get('prenom'));
         $email = htmlspecialchars($this->user->get('email'));
-        $nbTouites = (int)$this->user->get('nb_touite');
+
+        $repo = TouiterRepository::getInstance();
+        $nbTouites = count($repo->Afficher_Touite_Personne_donnee((int) $id));
 
         if ($selector === self::LONG) {
             return <<<HTML
