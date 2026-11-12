@@ -3,7 +3,6 @@
 namespace Touiteur\action;
 
 use Touiteur\action\Action;
-use Touiteur\classes\Image;
 use Touiteur\renders\ImageRenderer;
 use Touiteur\interfaces\Renderer;
 use Touiteur\repository\TouiterRepository;
