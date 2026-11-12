@@ -64,7 +64,7 @@ class TouiteRenderer implements Renderer
             <p>{$apercu}
                 $htmlImage
             </p>
-            <p><a href='?action=detail&&id=$id' style="color: #00bfff;">Voir le touite en détail →</a></p>
+            <p><a href='?action=detail&id_touite=$id' style="color: #00bfff;">Voir le touite en détail →</a></p>
         </div>
         HTML;
     }

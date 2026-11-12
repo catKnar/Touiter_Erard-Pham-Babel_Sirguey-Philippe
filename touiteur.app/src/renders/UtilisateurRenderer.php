@@ -33,7 +33,6 @@ class UtilisateurRenderer implements Renderer
                 <p>Email : {$email}</p>
                 <p>Nombre de touites publiés : {$nbTouites}</p>
                 <p>
-                    <a href="?action=user-touites&id_user={$id}" style="color: #00bfff;">Voir ses touites</a> |
                     <a href="?action=follow-user&id_user={$id}" style="color: #00ff88;">Suivre cet utilisateur</a>
                 </p>
             </div>

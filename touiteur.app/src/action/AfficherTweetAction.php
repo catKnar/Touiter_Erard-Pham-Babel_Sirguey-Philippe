@@ -7,10 +7,16 @@ use Touiteur\interfaces\Renderer;
 use Touiteur\renders\TouiteRenderer;
 use Touiteur\repository\TouiterRepository;
 
-class AfficherTweetAction extends Action {
+class AfficherTweetAction extends Action
+{
 
     public function execute(): string
     {
+
+        if (!isset($_GET['id_touite'])) {
+            return 'Identifiant du touite manquant.';
+        }
+
         $idtouite = (int) $_GET['id_touite'];
 
         $repo = TouiterRepository::getInstance();
