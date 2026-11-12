@@ -11,14 +11,18 @@ class AfficherListeTag extends Action {
 
     public function execute(): string {
 
-        $id_tag = isset($_GET['id_tag']) ? (int) $_GET['id_tag'] : 0;
+        $idTag = filter_input(INPUT_GET, 'id_tag', FILTER_VALIDATE_INT);
+        if ($idTag === false || $idTag === null || $idTag < 1) {
+            return '<p>Tag ID manquant ou invalide.</p>';
+        }
 
-        $repo = TouiterRepository :: getInstance();
-        $result = $repo->Affiche_touite_ParTag($id_tag);
+        $repo = TouiterRepository::getInstance();
+        $result = $repo->Affiche_touite_ParTag($idTag);
         $touites = array_column($result, 'touite');
 
-        return (new TouiteListRenderer($touites, 'Touites associés à ce tag : ' . $id_tag))
+        return (new TouiteListRenderer($touites, 'Touites associés à ce tag : ' . $idTag))
             ->render(Renderer::COMPACT);
+
     }
 }
 
