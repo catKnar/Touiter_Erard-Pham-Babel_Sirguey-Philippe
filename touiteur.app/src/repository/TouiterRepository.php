@@ -237,6 +237,46 @@ class TouiterRepository
         }
     }
 
+    // Fonctionnalité 9
+    public function Affiche_mur(int $idMoi): array
+    {
+        $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
+              FROM touite t
+              JOIN utilisateur u ON u.id_user = t.id_user
+              WHERE t.id_user IN (SELECT id_user_following FROM follower WHERE id_user = ?)
+                 OR t.id_touite IN (SELECT h.id_touite
+                                    FROM hashtag h
+                                    JOIN tag_abonnement ta ON ta.id_tag = h.id_tag
+                                    WHERE ta.id_user = ?)
+              ORDER BY t.date DESC";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $idMoi, PDO::PARAM_INT);
+        $stmt->bindParam(2, $idMoi, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $touites = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $touites[] = [
+                'touite' => new Touite((int)$row['id_touite'], $row['texte'], $row['date'], (int)$row['id_user'], (int)$row['id_img'], (int)$row['pouceUp'], (int)$row['pouceDown']),
+                'auteur' => new Utilisateur((int)$row['id_user'], $row['nom'], $row['prenom'], $row['email'], (int)$row['nb_touite'])
+            ];
+        }
+        return $touites;
+    }
+    //Fonctionnalité 10
+    public function suivreUtiliseurs(int $idMe, int $idFollow){
+        {
+            $stmt = $this->getPDO()->prepare("Insert ignore into follower values ($idMe,$idFollow)");
+            $stmt->execute();
+        }
+    }
+    //Fonctionnalité 11
+    public function tagAbonnement(int $id_user,int $id_tag){
+        {
+            $stmt = $this->getPDO()->prepare("Insert ingore into tag_abonnement values ($id_user,$id_tag)");
+            $stmt->execute();
+        }
+    }
     //affichage d'une image par id 
     public function Affiche_image_par_id(int $id): ?Image
     {
