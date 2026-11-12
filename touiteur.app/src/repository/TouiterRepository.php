@@ -263,6 +263,7 @@ class TouiterRepository
         }
         return $touites;
     }
+
     //Fonctionnalité 10
     public function suivreUtiliseurs(int $idMe, int $idFollow){
         {
@@ -270,10 +271,11 @@ class TouiterRepository
             $stmt->execute();
         }
     }
+
     //Fonctionnalité 11
     public function tagAbonnement(int $id_user,int $id_tag){
         {
-            $stmt = $this->getPDO()->prepare("Insert ingore into tag_abonnement values ($id_user,$id_tag)");
+            $stmt = $this->getPDO()->prepare("Insert ignore into tag_abonnement values ($id_user,$id_tag)");
             $stmt->execute();
         }
     }
