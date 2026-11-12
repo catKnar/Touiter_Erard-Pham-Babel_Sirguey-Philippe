@@ -5,6 +5,7 @@ require_once 'src/vendor/autoload.php';
 use Touiteur\action\DefaultAction;
 use Touiteur\action\AfficherProfilAction;
 use Touiteur\action\AfficherTweetAction;
+use Touiteur\action\AfficherUtilisateurProfilAction;
 use Touiteur\repository\TouiterRepository;
 use Touiteur\dispatch\Dispatcher;
 use Touiteur\conf\Router;
@@ -16,6 +17,7 @@ $Dispatcher = new Router();
 $Dispatcher->addRoute('default', DefaultAction::class);
 $Dispatcher->addRoute('profil', AfficherProfilAction::class);
 $Dispatcher->addRoute('detail', AfficherTweetAction::class);
+$Dispatcher->addRoute('user-touites', AfficherUtilisateurProfilAction::class);
 
 try {
     echo $Dispatcher->run();
