@@ -213,4 +213,21 @@ class TouiterRepository
 
         return $tag;
     }
+
+    
+    //fonctionnalité 7
+
+    public function incrementPouceUp(int $idTouite): void
+    {
+        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceUp = pouceUp + 1 WHERE id_touite = ?");
+        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function incrementPouceDown(int $idTouite): void
+    {
+        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceDown = pouceDown + 1 WHERE id_touite = ?");
+        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

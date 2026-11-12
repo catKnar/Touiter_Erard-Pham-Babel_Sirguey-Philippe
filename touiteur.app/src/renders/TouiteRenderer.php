@@ -3,7 +3,6 @@
 namespace Touiteur\renders;
 
 use Touiteur\classes\Touite;
-use Touiteur\classes\Utilisateur;
 use Touiteur\interfaces\Renderer;
 use Touiteur\repository\TouiterRepository;
 
@@ -23,7 +22,7 @@ class TouiteRenderer implements Renderer
                 return $this->renderLong();
             case self::COMPACT:
             default:
-                return $this-> renderCompact();
+                return $this->renderCompact();
         }
     }
 
@@ -34,12 +33,12 @@ class TouiteRenderer implements Renderer
     {
         $id = $this->touite->get('id_touite');
         $idUser = $this->touite->get('id_user');
-        $date = htmlspecialchars((string)$this->touite->get('date'));
+        $date = htmlspecialchars((string) $this->touite->get('date'));
         $texte = htmlspecialchars($this->touite->get('texte'));
 
         // Tronquage si texte trop long
         $apercu = mb_strlen($texte) > 100 ? mb_substr($texte, 0, 100) . "..." : $texte;
-        
+
         return <<<HTML
         <div class="touite-compact" style="border: 1px solid #ff5500; margin: 10px; padding: 10px; border-radius: 5px;">
             <p>
@@ -59,7 +58,7 @@ class TouiteRenderer implements Renderer
     {
         $id = $this->touite->get('id_touite');
         $idUser = $this->touite->get('id_user');
-        $date = htmlspecialchars((string)$this->touite->get('date'));
+        $date = htmlspecialchars((string) $this->touite->get('date'));
         $texte = $this->touite->get('texte');
 
         $repo = TouiterRepository::getInstance();
@@ -67,11 +66,11 @@ class TouiteRenderer implements Renderer
         $auteur = $repo->Affiche_touite_detail($id);
 
         $texteFormatte = '';
-        foreach($tags as $t){
+        foreach ($tags as $t) {
             $tag = $t->get('libelle');
-            
+
             // Tags en liens cliquables
-            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u','<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $tag);
+            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u', '<a href="?action=tag-touites&tag=$1" style="color: #00bfff;">#$1</a>', $tag);
         }
 
         $l = $auteur['auteur'];
@@ -86,13 +85,18 @@ class TouiteRenderer implements Renderer
                 $image = $repo->Affiche_image_par_id($idImg);
                 $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
-        $htmlScore = '';
-        try {
-            $score = $this->touite->get('pouceUp');
-            $htmlScore = "<p><strong>Score :</strong> {$score}</p>";
-        } catch (\Exception $e) {}
+        $pouceUp = (int) $this->touite->get('pouceUp');
+        $pouceDown = (int) $this->touite->get('pouceDown');
+
+        $htmlScore = "
+        <p>
+            <strong> Likes :</strong> {$pouceUp}
+            <strong> Dislikes :</strong> {$pouceDown}
+        </p>
+    ";
 
         return <<<HTML
         <div class="touite-long" style="border: 2px solid #ff5500; margin: 15px; padding: 15px; border-radius: 8px;">
