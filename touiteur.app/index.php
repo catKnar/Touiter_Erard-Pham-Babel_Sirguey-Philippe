@@ -2,6 +2,7 @@
 
 require_once 'src/vendor/autoload.php';
 
+use Touiteur\action\AfficherInfluenceursAction;
 use Touiteur\action\DefaultAction;
 use Touiteur\action\AfficherProfilAction;
 use Touiteur\action\AfficherTweetAction;
@@ -16,6 +17,7 @@ $Dispatcher = new Router();
 $Dispatcher->addRoute('default', DefaultAction::class);
 $Dispatcher->addRoute('profil', AfficherProfilAction::class);
 $Dispatcher->addRoute('detail', AfficherTweetAction::class);
+$Dispatcher->addRoute('influenceurs', AfficherInfluenceursAction::class);
 
 try {
     echo $Dispatcher->run();
