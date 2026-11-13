@@ -13,7 +13,7 @@ class AfficherListeTagAction extends Action
     public function execute(): string
     {
         $idTag = filter_input(INPUT_GET, 'id_tag', FILTER_VALIDATE_INT);
-        
+
         if ($idTag === false || $idTag === null || $idTag < 1) {
             return '<p>Tag ID manquant ou invalide.</p>';
         }
@@ -33,8 +33,7 @@ class AfficherListeTagAction extends Action
         $followTag = $followed ? sprintf('<a class="followtag" href="?action=follow-tag&amp;idTag=%d" style="margin-left: 15px; font-size: 1.2em; color: #00ff88;">[Tag suivi]</a>', $idTag)
             : sprintf('<a class="followtag" href="?action=follow-tag&amp;idTag=%d" style="margin-left: 15px; font-size: 1.2em; color: #00ff88;">[Suivre ce tag]</a>', $idTag);
 
-        $html = (new TouiteListRenderer($touites, 'Touites associés à ce tag : ' . $libelle))
-            ->render(Renderer::COMPACT);
+        $html = (new TouiteListRenderer($touites, 'Touites associés à ce tag : ' . $libelle))->render(Renderer::COMPACT);
 
         return $followTag . $html;
     }

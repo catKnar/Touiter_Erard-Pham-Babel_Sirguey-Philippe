@@ -284,7 +284,9 @@ class TouiterRepository
     public function suivreUtiliseurs(int $idMe, int $idFollow)
     { {
             $stmt = $this->getPDO()->prepare("Insert ignore into follower values ($idMe,$idFollow)");
-            $stmt->execute();
+            if ($idMe !== $idFollow) {
+                $stmt->execute();
+            }
         }
     }
 
@@ -322,7 +324,7 @@ class TouiterRepository
     /**
      * Fonctionnalité 14
      */
-    public function getMostFollowedUsers(int $limit = 20): array 
+    public function getMostFollowedUsers(int $limit = 20): array
     {
         $query = "SELECT u.*, COUNT(f.id_user) AS nb_suiveurs
                     FROM utilisateur u

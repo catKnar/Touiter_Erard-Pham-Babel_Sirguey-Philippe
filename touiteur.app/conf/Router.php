@@ -12,7 +12,6 @@ class Router
 
   public function __construct()
   {
-
     $this->action =  $_GET['action'] ?? 'default';
   }
 
@@ -26,79 +25,80 @@ class Router
   {
     $isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 
-    $lienAdmin = $isAdmin 
-    ? "<li><a href='?action=influenceurs' style='background-color: #d9084e;'><h2>Influenceurs</h2></a></li>"
-    : "";
+    $lienAdmin = $isAdmin
+      ? "<li><a href='?action=influenceurs' style='background-color: #d9084e;'><h2>Influenceurs</h2></a></li>"
+      : "";
 
     $texteSwitch = $isAdmin ? "Quitter Admin" : "Passer Admin";
-    $couleurSwitch = $isAdmin ? "#cccccc" : "#00ff88" ;
+    $couleurSwitch = $isAdmin ? "#cccccc" : "#00ff88";
 
 
     $res = "<html lang=\"fr\">
     
-<head>
-    <meta charset=\"UTF-8\">
-    <title>Touiteur</title>
-</head>
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #000d26; 
+          <head>
+          <meta charset=\"UTF-8\">
+          <title>Touiteur</title>
+          </head>
+          <style>
+                body {
+                  margin: 0;
+                  padding: 0;
+                  background-color: #000d26; 
+                }
+
+                h1,h2,h3, p {
+                  margin: 10px;
+                  color : white;
+                  font-family: monospace, sans-serif;
+                }
+
+                .navbar {
+                  list-style-type: none;
+                  margin: 0;
+                  padding: 0;
+                  overflow: hidden;
+                  background-color: #d9084e;
+                }
+
+                .navbar li {
+                  float: left;
+                  margin-right: 20px;
+                  
+                }
+
+                .navbar li h2 {
+                  color: white;
+                  font-family: monospace, sans-serif;
+                }
   
-}
+                .navbar li a {
+                  display: block;
+                  color: white;
+                  text-align: center;
+                  padding: 14px 16px;
+                  text-decoration: none;
+                  font-family: monospace, sans-serif;
+                }
 
-h1,h2,h3, p {
-  margin: 10px;
-  color : white;
-  font-family: monospace, sans-serif;
-}
+                .navbar h1{
+                color: white;
+                text-align: center;
+                }
 
-.navbar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #d9084e;
-}
-.navbar li {
-  float: left;
-  margin-right: 20px;
-  
-}
+              </style>
+            <body>
+                  <ul class='navbar'>
+                  <h1>Touiteur le faux</h1>
+                      <li><a href='?action=default'><h2>Accueil</h2></a></li>
+                      <li><a href='?action=profil'><h2>Compte</h2></a></li>
+                      <li><a href='?action=publier'><h2>Publier</h2></a></li>
+                      {$lienAdmin}
+                      <li style='float: right;'><a href='?action=switch-admin'><h2 style='color: {$couleurSwitch};'>{$texteSwitch}</h2></a></li>
+                  </ul>
 
-.navbar li h2 {
-  color: white;
-  font-family: monospace, sans-serif;
-}
-.navbar li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-family: monospace, sans-serif;
-}
-
-.navbar h1{
-color: white;
-text-align: center;
-}
-
-</style>
-<body>
-        <ul class='navbar'>
-        <h1>Touiteur le faux</h1>
-            <li><a href='?action=default'><h2>Accueil</h2></a></li>
-            <li><a href='?action=profil'><h2>Compte</h2></a></li>
-            <li><a href='?action=publier'><h2>Publier</h2></a></li>
-            {$lienAdmin}
-            <li style='float: right;'><a href='?action=switch-admin'><h2 style='color: {$couleurSwitch};'>{$texteSwitch}</h2></a></li>
-        </ul>
-
-          " . $html . "
+                    " . $html . "
     
-</body>";
+              </body>";
 
     return $res;
   }

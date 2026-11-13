@@ -44,7 +44,7 @@ class AfficherInfluenceursAction extends Action
         foreach ($influenceurs as $item) {
             $user = $item['utilisateur'];
             $nbSuiveurs = $item['nb_suiveurs'];
-            
+
             $id = $user->get('id_user');
             $nom = htmlspecialchars($user->get('nom'));
             $prenom = htmlspecialchars($user->get('prenom'));
