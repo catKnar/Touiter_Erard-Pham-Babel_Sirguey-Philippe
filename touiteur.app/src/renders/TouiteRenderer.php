@@ -86,20 +86,16 @@ class TouiteRenderer implements Renderer
         $texteSuivi = $repo->estSuivi((int) $_SESSION['id_user'], (int) $idUser) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
 
 
-        $texteFormatte = '';
+        $texteFormatte = htmlspecialchars($texte, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $lien = '';
 
         foreach ($tags as $t) {
             $idTag = (int) $t->get('id_tag');
-            $libelle = htmlspecialchars(
-                $t->get('libelle'),
-                ENT_QUOTES | ENT_SUBSTITUTE,
-                'UTF-8'
-            );
+            $libelle = htmlspecialchars($t->get('libelle'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-            $texteFormatte .= '<a href="?action=tag-touites&id_tag=' . $idTag
-                . '" style="color: #00bfff;">#' . $libelle . '</a> ';
+            $lien .= '<a href="?action=tag-touites&id_tag=' . $idTag . '" style="color: #00bfff;">#' . $libelle . '</a> ';
+            $texteFormatte = str_replace('#' . $libelle, $lien, $texteFormatte);
         }
-
 
         $l = $auteur['auteur'];
         $nom = $l->get('nom');
@@ -134,7 +130,7 @@ class TouiteRenderer implements Renderer
                 <a href="?action=follow-user&id_user={$idUser}&origine=touite&id_touite={$id}" style="margin-left: 15px; font-size: 0.8em; color: #00ff88;">{$texteSuivi}</a>
             </h3>
             <p><small>Publié le : {$date}</small></p>
-            <p style="font-size: 1.2em;">$texte {$texteFormatte}</p>
+            <p style="font-size: 1.2em;">{$texteFormatte}</p>
             {$htmlImage}
             {$htmlScore}
             <div class="touite-actions" style="margin-top: 10px;">
