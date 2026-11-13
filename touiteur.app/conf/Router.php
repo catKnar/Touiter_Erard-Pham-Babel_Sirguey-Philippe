@@ -93,7 +93,6 @@ text-align: center;
             <li><a href='?action=publier'><h2>Publier</h2></a></li>
             {$lienAdmin}
             <li style='float: right;'><a href='?action=switch-admin'><h2 style='color: {$couleurSwitch};'>{$texteSwitch}</h2></a></li>
-            <li><h2>Recherche</h2></li>
         </ul>
 
           " . $html . "
