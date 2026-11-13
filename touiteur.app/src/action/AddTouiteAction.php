@@ -8,18 +8,16 @@ class AddTouiteAction extends Action
 {
     public function execute(): string
     {
-       
+
         $userId = filter_var(
             $_SESSION['id_user'] ?? null,
             FILTER_VALIDATE_INT
         );
 
-       
         if ($this->http_method === 'POST') {
 
             $content = trim($_POST['content'] ?? '');
 
-            
             if ($content === '') {
                 return $this->renderForm(
                     "Le contenu du touite ne peut pas être vide."
@@ -33,36 +31,22 @@ class AddTouiteAction extends Action
                 );
             }
 
-           
             $repo = TouiterRepository::getInstance();
 
             $repo->Ajout_Touite($userId, $content);
 
-           
             header('Location: ?action=default');
             exit;
         }
 
-      
         return $this->renderForm();
     }
 
-    private function renderForm(
-        string $error = '',
-        string $content = ''
-    ): string {
+    private function renderForm(string $error = '', string $content = ''): string {
 
-        $safeContent = htmlspecialchars(
-            $content,
-            ENT_QUOTES | ENT_SUBSTITUTE,
-            'UTF-8'
-        );
+        $safeContent = htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-        $safeError = htmlspecialchars(
-            $error,
-            ENT_QUOTES | ENT_SUBSTITUTE,
-            'UTF-8'
-        );
+        $safeError = htmlspecialchars($error, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
         return <<<HTML
         <section>

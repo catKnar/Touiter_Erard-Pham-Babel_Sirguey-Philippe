@@ -2,7 +2,7 @@
 
 namespace Touiteur\action;
 
-class SwitchAdminAction extends Action 
+class SwitchAdminAction extends Action
 {
     public function execute(): string
     {
