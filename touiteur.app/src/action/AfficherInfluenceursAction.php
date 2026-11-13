@@ -53,7 +53,7 @@ class AfficherInfluenceursAction extends Action
 
             $html .= "<tr>";
             $html .= "<td style='padding: 10px; border: 1px solid white;'>{$id}</td>";
-            $html .= "<td style='padding: 10px; border: 1px solid white;'><a href='?action=profil&id_user={$id}' style='color: #00bfff;'>{$prenom} {$nom}</a></td>";
+            $html .= "<td style='padding: 10px; border: 1px solid white;'><a href='?action=user-touites&id_user={$id}' style='color: #00bfff;'>{$prenom} {$nom}</a></td>";
             $html .= "<td style='padding: 10px; border: 1px solid white;'>{$email}</td>";
             $html .= "<td style='padding: 10px; border: 1px solid white; text-align: center;'>{$nbTouites}</td>";
             $html .= "<td style='padding: 10px; border: 1px solid white; text-align: center;'><strong>{$nbSuiveurs}</strong></td>";

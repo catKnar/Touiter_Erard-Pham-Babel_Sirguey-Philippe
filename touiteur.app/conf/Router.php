@@ -27,11 +27,11 @@ class Router
     $isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 
     $lienAdmin = $isAdmin 
-    ? "<li><a href='?action=influenceurs' style='background-color: #000d26;'><h2>Influenceurs</h2></a></li>"
+    ? "<li><a href='?action=influenceurs' style='background-color: #d9084e;'><h2>Influenceurs</h2></a></li>"
     : "";
 
     $texteSwitch = $isAdmin ? "Quitter Admin" : "Passer Admin";
-    $couleurSwitch = $isAdmin ? "#00ff88" : "#cccccc";
+    $couleurSwitch = $isAdmin ? "#cccccc" : "#00ff88" ;
 
 
     $res = "<html lang=\"fr\">
@@ -84,6 +84,7 @@ h1,h2,h3, p {
 color: white;
 text-align: center;
 }
+
 </style>
 <body>
         <ul class='navbar'>
