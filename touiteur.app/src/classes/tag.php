@@ -1,38 +1,33 @@
-<?php 
+<?php
 
 namespace Touiteur\classes;
 
 use Exception;
 
-class Tag {
+class Tag
+{
 
-   protected int $id_tag;
-
-   protected String $libelle;
-
-   protected String $description_tag;
+    protected int $id_tag;
+    protected String $libelle;
+    protected String $description_tag;
 
 
-   public function __construct(int $id_tag , String $lib, String $desc ){
+    public function __construct(int $id_tag, String $lib, String $desc)
+    {
         $this->id_tag = $id_tag;
         $this->libelle = $lib;
         $this->description_tag = $desc;
-   }
+    }
 
-    public function get( string $attrname) : mixed {
-        if (property_exists($this, $attrname)) 
-        return $this->$attrname;
+    public function get(string $attrname): mixed
+    {
+        if (property_exists($this, $attrname))
+            return $this->$attrname;
         throw new Exception("$attrname : invalid property");
     }
 
-
-
-   public function toHtml(): String {
-       return "<h2> {$this->id_tag}</h2>";
-   }
-
-
+    public function toHtml(): String
+    {
+        return "<h2> {$this->id_tag}</h2>";
+    }
 }
-
-
-?>

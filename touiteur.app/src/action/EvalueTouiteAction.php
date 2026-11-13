@@ -11,10 +11,9 @@ class EvalueTouiteAction extends Action
         // Récupération des paramètres
         $idTouite = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $note = filter_input(INPUT_GET, 'note', FILTER_VALIDATE_INT);
-       
+
         $repo = TouiterRepository::getInstance();
 
-     
         if ($note === 1) {
             $repo->incrementPouceUp($idTouite);
         } else {

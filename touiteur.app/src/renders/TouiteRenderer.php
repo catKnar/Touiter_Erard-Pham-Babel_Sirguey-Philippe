@@ -50,7 +50,8 @@ class TouiteRenderer implements Renderer
                 $image = $repo->Affiche_image_par_id($idImg);
                 $htmlImage = (new ImageRenderer($image))->render(Renderer::LONG);
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // Tronquage si texte trop long
         $apercu = mb_strlen($texte) > 100 ? mb_substr($texte, 0, 100) . "..." : $texte;
@@ -110,7 +111,7 @@ class TouiteRenderer implements Renderer
 
         $pouceUp = (int) $this->touite->get('pouceUp');
         $pouceDown = (int) $this->touite->get('pouceDown');
-        
+
 
         $htmlScore = "
         <p>
@@ -136,5 +137,4 @@ class TouiteRenderer implements Renderer
         </div>
         HTML;
     }
-
 }

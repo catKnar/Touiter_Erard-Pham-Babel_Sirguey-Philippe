@@ -296,13 +296,15 @@ class TouiterRepository
     }
 
     //Fonctionnalité 11
-    public function tagAbonnement(int $id_user, int $id_tag): void {
+    public function tagAbonnement(int $id_user, int $id_tag): void
+    {
 
         $stmt = $this->getPDO()->prepare("INSERT IGNORE INTO tag_abonnement (id_user, id_tag) VALUES (?, ?)");
         $stmt->execute([$id_user, $id_tag]);
     }
 
-    public function estAbonneAuTag(int $id_user, int $id_tag): bool {
+    public function estAbonneAuTag(int $id_user, int $id_tag): bool
+    {
 
         $stmt = $this->getPDO()->prepare("SELECT 1 FROM tag_abonnement WHERE id_user = ? AND id_tag = ? LIMIT 1");
         $stmt->execute([$id_user, $id_tag]);
@@ -310,7 +312,8 @@ class TouiterRepository
         return $stmt->fetchColumn() !== false;
     }
 
-    public function retirerAbonnementTag(int $id_user, int $id_tag): void {
+    public function retirerAbonnementTag(int $id_user, int $id_tag): void
+    {
 
         $stmt = $this->getPDO()->prepare("DELETE FROM tag_abonnement WHERE id_user = ? AND id_tag = ?");
         $stmt->execute([$id_user, $id_tag]);

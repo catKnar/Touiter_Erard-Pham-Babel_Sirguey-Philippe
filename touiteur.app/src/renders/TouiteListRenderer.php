@@ -30,7 +30,7 @@ class TouiteListRenderer implements Renderer
     {
         $titreXSS = htmlspecialchars($this->titre);
         $retour = "<div class='touite-list'><h2>{$titreXSS}</h2>";
-        
+
         if (empty($this->touites)) {
             $retour .= "<p>Aucun touite à afficher pour le moment.</p></div>";
             return $retour;
@@ -45,7 +45,7 @@ class TouiteListRenderer implements Renderer
         }
         $retour .= "</ul>";
         $retour .= "<p>Total affiché : " . count($this->touites) . " touite(s)</p></div>";
-       
+
         return $retour;
     }
 }

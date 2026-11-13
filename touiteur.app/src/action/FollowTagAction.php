@@ -5,12 +5,13 @@ namespace Touiteur\action;
 use Touiteur\action\Action;
 use Touiteur\repository\TouiterRepository;
 
-class FollowTagAction extends Action {
+class FollowTagAction extends Action
+{
 
-    public function execute(): string {
-        
+    public function execute(): string
+    {
         $idTag = filter_input(INPUT_GET, 'idTag', FILTER_VALIDATE_INT);
-        
+
         if ($idTag === false || $idTag === null || $idTag < 1) {
             return '<p>Identifiant de tag manquant ou invalide.</p>';
         }
@@ -30,7 +31,4 @@ class FollowTagAction extends Action {
         header('Location: ?action=tag-touites&id_tag=' . $idTag);
         exit;
     }
-
 }
-
-?>

@@ -20,13 +20,10 @@ class ImageRenderer implements Renderer
             return "";
         }
 
-       
         $nomFichier = basename($this->image->get('chemin_fichier'));
 
-        
         $url = htmlspecialchars('src/img/' . $nomFichier);
 
-       
         $cheminDisque = __DIR__ . '/../img/' . $nomFichier;
 
         $desc = htmlspecialchars($this->image->get('description_image'));
