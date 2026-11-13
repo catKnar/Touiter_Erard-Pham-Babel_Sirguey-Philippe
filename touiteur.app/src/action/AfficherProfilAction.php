@@ -18,6 +18,9 @@ class AfficherProfilAction extends Action
 
         $repo = TouiterRepository::getInstance();
         $result = $repo->Afficher_Touite_Personne_donnee($id);
+        $nom = '';
+        $prenom = '';
+        $email = '';
 
         foreach ($result as $item) {
             $user = $item['auteur'];
