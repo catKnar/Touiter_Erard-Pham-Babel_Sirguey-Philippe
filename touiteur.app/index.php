@@ -15,6 +15,7 @@ use Touiteur\repository\TouiterRepository;
 use Touiteur\conf\Router;
 
 session_start();
+$_SESSION['id_user'] = 333;
 TouiterRepository::setConfig('Config.db.ini');
 
 $Dispatcher = new Router();

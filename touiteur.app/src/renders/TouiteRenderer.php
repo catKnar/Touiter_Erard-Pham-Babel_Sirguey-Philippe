@@ -82,7 +82,7 @@ class TouiteRenderer implements Renderer
         $repo = TouiterRepository::getInstance();
         $tags = $repo->Affiche_tag_par_id($id);
         $auteur = $repo->Affiche_touite_detail($id);
-        $texteSuivi = $repo->estSuivi(333, (int) $idUser) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
+        $texteSuivi = $repo->estSuivi((int) $_SESSION['id_user'], (int) $idUser) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
 
         $texteFormatte = '';
         foreach ($tags as $t) {

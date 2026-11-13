@@ -31,7 +31,7 @@ class UtilisateurRenderer implements Renderer
         $nbTouites = count($repo->Afficher_Touite_Personne_donnee((int) $id));
 
         if ($selector === self::LONG) {
-            $texteSuivi = $repo->estSuivi(333, (int) $id) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
+            $texteSuivi = $repo->estSuivi((int) $_SESSION['id_user'], (int) $id) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
             return <<<HTML
             <div class="user-profile" style="border: 1px solid white; padding: 15px; margin: 10px;">
                 <h2>Profil de {$prenom} {$nom} (@{$id})</h2>

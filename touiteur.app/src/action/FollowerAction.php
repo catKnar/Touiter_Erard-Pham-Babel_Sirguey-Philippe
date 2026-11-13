@@ -9,7 +9,7 @@ class FollowerAction extends Action
 {
     public function execute(): string
     {
-        $idMe = 333;
+        $idMe = (int) $_SESSION['id_user'];
         $idFollow = (int) $_GET['id_user'];
         $origine = $_GET['origine'] ?? '';
 
