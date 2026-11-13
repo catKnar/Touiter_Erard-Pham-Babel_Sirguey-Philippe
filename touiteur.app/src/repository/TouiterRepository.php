@@ -207,7 +207,23 @@ class TouiterRepository
         }
     }
 
-// Fonctionnalité 8
+    //fonctionnalité 7
+
+    public function incrementPouceUp(int $idTouite): void
+    {
+        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceUp = pouceUp + 1 WHERE id_touite = ?");
+        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function incrementPouceDown(int $idTouite): void
+    {
+        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceDown = pouceDown + 1 WHERE id_touite = ?");
+        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    // Fonctionnalité 8
     public function extract_Tag(int $idTouite, string $texte): void
     {
         preg_match_all('/#(\w+)/u', $texte, $matches);
@@ -265,20 +281,28 @@ class TouiterRepository
     }
 
     //Fonctionnalité 10
-    public function suivreUtiliseurs(int $idMe, int $idFollow){
-        {
+    public function suivreUtiliseurs(int $idMe, int $idFollow)
+    { {
             $stmt = $this->getPDO()->prepare("Insert ignore into follower values ($idMe,$idFollow)");
             $stmt->execute();
         }
     }
 
+    public function desabonnerUtiliseurs(int $idMe, int $idFollow)
+    { {
+            $stmt = $this->getPDO()->prepare("Delete ignore from follower where id_user = $idMe and id_user_following = $idFollow");
+            $stmt->execute();
+        }
+    }
+
     //Fonctionnalité 11
-    public function tagAbonnement(int $id_user,int $id_tag){
-        {
+    public function tagAbonnement(int $id_user, int $id_tag)
+    { {
             $stmt = $this->getPDO()->prepare("Insert ignore into tag_abonnement values ($id_user,$id_tag)");
             $stmt->execute();
         }
     }
+
     //affichage d'une image par id 
     public function Affiche_image_par_id(int $id): ?Image
     {
@@ -298,39 +322,33 @@ class TouiterRepository
         );
     }
 
-    public function Affiche_tag_par_id(int $id): Array
+    public function Affiche_tag_par_id(int $id): array
     {
         $query = "SELECT * 
                   FROM tag
                   JOIN hashtag on tag.id_tag = hashtag.id_tag
                   WHERE id_touite = ?";
-        
+
         $stmt = $this->getPDO()->prepare($query);
         $stmt->bindParam(1, $id, PDO::PARAM_INT);
         $stmt->execute();
 
         $tag = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $tag [] = new Tag((int)$row['id_tag'], $row['libelle'], $row['description_tag']);
+            $tag[] = new Tag((int)$row['id_tag'], $row['libelle'], $row['description_tag']);
         }
 
         return $tag;
     }
 
-
-    //fonctionnalité 7
-
-    public function incrementPouceUp(int $idTouite): void
+    public function estSuivi(int $idMe, int $idFollow): bool
     {
-        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceUp = pouceUp + 1 WHERE id_touite = ?");
-        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
-        $stmt->execute();
-    }
+        $query = "SELECT *
+                  FROM follower
+                  WHERE id_user = ? AND id_user_following = ?";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->execute([$idMe, $idFollow]);
 
-    public function incrementPouceDown(int $idTouite): void
-    {
-        $stmt = $this->getPDO()->prepare("UPDATE touite SET pouceDown = pouceDown + 1 WHERE id_touite = ?");
-        $stmt->bindParam(1, $idTouite, PDO::PARAM_INT);
-        $stmt->execute();
+        return $stmt->fetch() !== false;
     }
 }
