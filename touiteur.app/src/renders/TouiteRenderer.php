@@ -85,14 +85,21 @@ class TouiteRenderer implements Renderer
         $auteur = $repo->Affiche_touite_detail($id);
         $texteSuivi = $repo->estSuivi((int) $_SESSION['id_user'], (int) $idUser) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
 
-        $texteFormatte = '';
-        foreach ($tags as $t) {
-            $tag = $t->get('libelle');
-            $idTag = (int) $t->get('id_tag');
 
-            // Tags en liens cliquables
-            $texteFormatte = preg_replace('/#([a-zA-Z0-9_À-ÿ]+)/u', '<a href="?action=tag-touites&id_tag=' . $idTag . '" style="color: #00bfff;">#$1</a>', $tag);
+        $texteFormatte = '';
+
+        foreach ($tags as $t) {
+            $idTag = (int) $t->get('id_tag');
+            $libelle = htmlspecialchars(
+                $t->get('libelle'),
+                ENT_QUOTES | ENT_SUBSTITUTE,
+                'UTF-8'
+            );
+
+            $texteFormatte .= '<a href="?action=tag-touites&id_tag=' . $idTag
+                . '" style="color: #00bfff;">#' . $libelle . '</a> ';
         }
+
 
         $l = $auteur['auteur'];
         $nom = $l->get('nom');
