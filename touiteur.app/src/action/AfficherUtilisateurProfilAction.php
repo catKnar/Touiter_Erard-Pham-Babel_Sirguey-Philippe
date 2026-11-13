@@ -14,16 +14,17 @@ class AfficherUtilisateurProfilAction extends Action
     public function execute(): string
     {
         $idUser = (int) $_GET['id_user'];
+        $iduser = (int) $_SESSION['id_user'];
+
+        if ($idUser === $iduser) {
+            header('Location: ?action=profil');
+            exit();
+        }
 
         $repo = TouiterRepository::getInstance();
         $result = $repo->Afficher_Touite_Personne_donnee($idUser);
 
         $user = $result[0]['auteur'] ?? null;
-
-        if ($user === $user) {
-            header('Location: ?action=profil');
-            exit;
-        }
 
         $html = (new UtilisateurRenderer($user))->render(Renderer::LONG);
 
