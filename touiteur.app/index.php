@@ -6,7 +6,6 @@ use Touiteur\action\AfficherListeTagAction;
 use Touiteur\action\DefaultAction;
 use Touiteur\action\AfficherProfilAction;
 use Touiteur\action\AfficherTweetAction;
-use Touiteur\action\AfficherListeTag;
 use Touiteur\action\AfficherUtilisateurProfilAction;
 use Touiteur\action\EvalueTouiteAction;
 use Touiteur\action\FollowTagAction;
