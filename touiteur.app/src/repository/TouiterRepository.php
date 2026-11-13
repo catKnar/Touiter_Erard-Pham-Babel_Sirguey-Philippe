@@ -174,6 +174,7 @@ class TouiterRepository
         }
         return $touites;
     }
+    
     // Fonctionnalité 6
     public function Ajout_Touite(int $id_user, string $texte, ?int $id_img = null): int
     {

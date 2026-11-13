@@ -50,20 +50,29 @@ class DefaultAction extends Action
                 <div class="touite">
         HTML;
 
+        $iduser = (int) $_SESSION['id_user'];
         $repo = TouiterRepository::getInstance();
-        $touites = $repo->Affiche_liste_touites();
+         
+        if (!$repo->Affiche_mur($iduser)){
+            $touites = $repo->Affiche_liste_touites();
+        } else {
+            $touites = $repo->Affiche_mur($iduser);
+        }
+        
         $html = '';
 
         foreach ($touites as $l) {
             $t = $l['touite'];
             $a = $l['auteur'];
             $id = $t->get('id_touite');
+            $idUser = $t->get('id_user');
             $texte = $t->get('texte');
             $date = $t->get('date');
             $pouceUp = $t->get('pouceUp');
             $pouceDown = $t->get('pouceDown');
             $nom = $a->get('nom');
             $prenom = $a->get('prenom');
+            
 
             $htmlImage = '';
             $idImg = $t->get('id_img');
