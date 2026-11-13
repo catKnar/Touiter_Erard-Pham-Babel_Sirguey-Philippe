@@ -14,6 +14,7 @@ use Touiteur\action\FollowTagAction;
 use Touiteur\action\FollowerAction;
 use Touiteur\repository\TouiterRepository;
 use Touiteur\conf\Router;
+use Touiteur\action\AddTouiteAction;    
 
 session_start();
 $_SESSION['id_user'] = 333;
@@ -30,6 +31,7 @@ $Dispatcher->addRoute('evaluate-touite', EvalueTouiteAction::class);
 $Dispatcher->addRoute('follow-tag', FollowTagAction::class);
 $Dispatcher->addRoute('influenceurs', AfficherInfluenceursAction::class);
 $Dispatcher->addRoute('switch-admin', SwitchAdminAction::class);
+$Dispatcher->addRoute('publier', AddTouiteAction::class);
 
 try {
     echo $Dispatcher->run();
