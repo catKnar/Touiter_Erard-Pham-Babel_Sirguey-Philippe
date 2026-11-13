@@ -82,6 +82,7 @@ text-align: center;
         <h1>Touiteur le faux</h1>
             <li><a href='?action=default'><h2>Accueil</h2></a></li>
             <li><a href='?action=profil'><h2>Compte</h2></a></li>
+            <li><a href='?action=publier'><h2>Publier</h2></a></li>
         </ul>
 
           " . $html . "
