@@ -49,13 +49,13 @@ class AfficherInfluenceursAction extends Action
             $nom = htmlspecialchars($user->get('nom'));
             $prenom = htmlspecialchars($user->get('prenom'));
             $email = htmlspecialchars($user->get('email'));
-            $nbTouite = (int)$user->get('nb_touite');
+            $nbTouites = count($repo->Afficher_Touite_Personne_donnee((int) $id));
 
             $html .= "<tr>";
             $html .= "<td style='padding: 10px; border: 1px solid white;'>{$id}</td>";
             $html .= "<td style='padding: 10px; border: 1px solid white;'><a href='?action=profil&id_user={$id}' style='color: #00bfff;'>{$prenom} {$nom}</a></td>";
             $html .= "<td style='padding: 10px; border: 1px solid white;'>{$email}</td>";
-            $html .= "<td style='padding: 10px; border: 1px solid white; text-align: center;'>{$nbTouite}</td>";
+            $html .= "<td style='padding: 10px; border: 1px solid white; text-align: center;'>{$nbTouites}</td>";
             $html .= "<td style='padding: 10px; border: 1px solid white; text-align: center;'><strong>{$nbSuiveurs}</strong></td>";
             $html .= "</tr>";
         }
