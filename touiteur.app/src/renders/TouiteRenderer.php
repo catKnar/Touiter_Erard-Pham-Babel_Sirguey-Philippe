@@ -82,6 +82,7 @@ class TouiteRenderer implements Renderer
         $repo = TouiterRepository::getInstance();
         $tags = $repo->Affiche_tag_par_id($id);
         $auteur = $repo->Affiche_touite_detail($id);
+        $texteSuivi = $repo->estSuivi(333, (int) $idUser) ? 'Ne plus suivre' : 'Suivre cet utilisateur';
 
         $texteFormatte = '';
         foreach ($tags as $t) {
@@ -109,6 +110,7 @@ class TouiteRenderer implements Renderer
 
         $pouceUp = (int) $this->touite->get('pouceUp');
         $pouceDown = (int) $this->touite->get('pouceDown');
+        
 
         $htmlScore = "
         <p>
@@ -121,7 +123,7 @@ class TouiteRenderer implements Renderer
         <div class="touite-long" style="border: 2px solid #ff5500; margin: 15px; padding: 15px; border-radius: 8px;">
             <h3>
                 Auteur : <a href="?action=user-touites&id_user={$idUser}" style="color: #ff5500;">$nom $prenom #{$idUser}</a>
-                <a href="?action=follow-user&id_user={$idUser}" style="margin-left: 15px; font-size: 0.8em; color: #00ff88;">[+ Suivre cet auteur]</a>
+                <a href="?action=follow-user&id_user={$idUser}&origine=touite&id_touite={$id}" style="margin-left: 15px; font-size: 0.8em; color: #00ff88;">{$texteSuivi}</a>
             </h3>
             <p><small>Publié le : {$date}</small></p>
             <p style="font-size: 1.2em;">$texte {$texteFormatte}</p>

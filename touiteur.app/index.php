@@ -10,6 +10,7 @@ use Touiteur\action\AfficherListeTag;
 use Touiteur\action\AfficherUtilisateurProfilAction;
 use Touiteur\action\EvalueTouiteAction;
 use Touiteur\action\FollowTagAction;
+use Touiteur\action\FollowerAction;
 use Touiteur\repository\TouiterRepository;
 use Touiteur\conf\Router;
 
@@ -22,6 +23,7 @@ $Dispatcher->addRoute('profil', AfficherProfilAction::class);
 $Dispatcher->addRoute('detail', AfficherTweetAction::class);
 $Dispatcher->addRoute('tag-touites', AfficherListeTagAction::class);
 $Dispatcher->addRoute('user-touites', AfficherUtilisateurProfilAction::class);
+$Dispatcher->addRoute('follow-user', FollowerAction::class);
 $Dispatcher->addRoute('evaluate-touite', EvalueTouiteAction::class);
 $Dispatcher->addRoute('follow-tag', FollowTagAction::class);
 
@@ -30,7 +32,5 @@ try {
 } catch (Exception $e) {
     echo "Oups, erreur: " . $e->getMessage();
 }
-
-
 
 ?>
