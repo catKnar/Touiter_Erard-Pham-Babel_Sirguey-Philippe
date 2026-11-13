@@ -328,7 +328,7 @@ class TouiterRepository
                     FROM utilisateur u
                     LEFT JOIN follower f ON f.id_user_following = u.id_user
                     GROUP BY u.id_user, u.nom, u.prenom, u.email, u.nb_touite
-                    ORDER BY nb_suiveurs ASC
+                    ORDER BY nb_suiveurs desc
                     LIMIT ?";
 
         $stmt = $this->getPDO()->prepare($query);

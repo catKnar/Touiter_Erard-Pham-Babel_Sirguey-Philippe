@@ -27,7 +27,7 @@ class AfficherInfluenceursAction extends Action
         $html = "<h2>Les Influenceurs</h2>";
         $html .= "<p>Liste des utilisateurs classés par ordre croissant du nombre de suiveurs :</p>";
 
-        if (empty($influencers)) {
+        if (empty($influenceurs)) {
             $html .= "<p>Aucun utilisateur enregistré pour le moment.</p>";
             return $html;
         }
@@ -41,7 +41,7 @@ class AfficherInfluenceursAction extends Action
         $html .= "<th style='padding: 12px; border: 1px solid white; text-align: center;'>Nombre de suiveurs</th>";
         $html .= "</tr>";
 
-        foreach ($influencers as $item) {
+        foreach ($influenceurs as $item) {
             $user = $item['utilisateur'];
             $nbSuiveurs = $item['nb_suiveurs'];
             
