@@ -24,10 +24,18 @@ class Router
 
   private function renderPage(string $html): string
   {
+    $isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+
+    $lienAdmin = $isAdmin 
+    ? "<li><a href='?action=influenceurs' style='background-color: #000d26;'><h2>Influenceurs</h2></a></li>"
+    : "";
+
+    $texteSwitch = $isAdmin ? "Quitter Admin" : "Passer Admin";
+    $couleurSwitch = $isAdmin ? "#00ff88" : "#cccccc";
 
 
     $res = "<html lang=\"fr\">
-
+    
 <head>
     <meta charset=\"UTF-8\">
     <title>Touiteur</title>
@@ -83,6 +91,9 @@ text-align: center;
             <li><a href='?action=default'><h2>Accueil</h2></a></li>
             <li><a href='?action=profil'><h2>Compte</h2></a></li>
             <li><a href='?action=publier'><h2>Publier</h2></a></li>
+            {$lienAdmin}
+            <li style='float: right;'><a href='?action=switch-admin'><h2 style='color: {$couleurSwitch};'>{$texteSwitch}</h2></a></li>
+            <li><h2>Recherche</h2></li>
         </ul>
 
           " . $html . "

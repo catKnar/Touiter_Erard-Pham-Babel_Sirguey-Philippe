@@ -3,6 +3,8 @@
 require_once 'src/vendor/autoload.php';
 
 use Touiteur\action\AfficherListeTagAction;
+use Touiteur\action\AfficherInfluenceursAction;
+use Touiteur\action\SwitchAdminAction;
 use Touiteur\action\DefaultAction;
 use Touiteur\action\AfficherProfilAction;
 use Touiteur\action\AfficherTweetAction;
@@ -26,6 +28,8 @@ $Dispatcher->addRoute('user-touites', AfficherUtilisateurProfilAction::class);
 $Dispatcher->addRoute('follow-user', FollowerAction::class);
 $Dispatcher->addRoute('evaluate-touite', EvalueTouiteAction::class);
 $Dispatcher->addRoute('follow-tag', FollowTagAction::class);
+$Dispatcher->addRoute('influenceurs', AfficherInfluenceursAction::class);
+$Dispatcher->addRoute('switch-admin', SwitchAdminAction::class);
 
 try {
     echo $Dispatcher->run();
