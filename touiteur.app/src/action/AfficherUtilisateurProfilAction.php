@@ -20,6 +20,11 @@ class AfficherUtilisateurProfilAction extends Action
 
         $user = $result[0]['auteur'] ?? null;
 
+        if ($user === $user) {
+            header('Location: ?action=profil');
+            exit;
+        }
+
         $html = (new UtilisateurRenderer($user))->render(Renderer::LONG);
 
         foreach ($result as $item) {

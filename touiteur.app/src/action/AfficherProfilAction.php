@@ -3,20 +3,30 @@
 namespace Touiteur\action;
 
 use Touiteur\action\Action;
-use Touiteur\classes\Utilisateur;
+use Touiteur\repository\TouiterRepository;
+use Touiteur\interfaces\Renderer;
+use Touiteur\renders\TouiteRenderer;
 
 class AfficherProfilAction extends Action
 {
 
     public function execute(): string
     {
-        $u1 = new utilisateur(333, "Bob", "Eponge", "poisson@uni.fr", 0);
 
-        $id = $u1->get('id_user');
-        $nom = $u1->get('nom');
-        $prenom = $u1->get('prenom');
-        $email = $u1->get('email');
-        $touite = $u1->get('nb_touite');
+
+        $id = (int) $_SESSION['id_user'];
+
+        $repo = TouiterRepository::getInstance();
+        $result = $repo->Afficher_Touite_Personne_donnee($id);
+
+        foreach ($result as $item) {
+            $user = $item['auteur'];
+            $nom = htmlspecialchars($user->get('nom'));
+            $prenom = htmlspecialchars($user->get('prenom'));
+            $email = htmlspecialchars($user->get('email'));
+        }
+
+        $nbTouites = count($repo->Afficher_Touite_Personne_donnee((int) $id));
 
         $html = <<<HTML
                 <style>
@@ -52,7 +62,7 @@ class AfficherProfilAction extends Action
 
                 <div class = "profil_ent">
                 <p> Profil : $nom $prenom <br>
-                $touite touites</p> 
+                $nbTouites touites</p> 
                 </div>
 
                 <div class = "profil_info">
@@ -61,6 +71,11 @@ class AfficherProfilAction extends Action
                 $id</p>
                 </div>
         HTML;
+
+        foreach ($result as $item) {
+            $touite = $item['touite'];
+            $html .= (new TouiteRenderer($touite))->render(Renderer::COMPACT);
+        }
 
         return $html;
     }
