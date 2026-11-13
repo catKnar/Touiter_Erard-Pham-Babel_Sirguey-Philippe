@@ -28,7 +28,7 @@ class AfficherListeTagAction extends Action
             $libelle = $t->get('libelle');
         }
 
-        $idUser = 1;
+        $idUser = 333;
         $followed = $repo->estAbonneAuTag($idUser, $idTag);
         $followTag = $followed ? sprintf('<a class="followtag" href="?action=follow-tag&amp;idTag=%d" style="margin-left: 15px; font-size: 1.2em; color: #00ff88;">[Tag suivi]</a>', $idTag)
             : sprintf('<a class="followtag" href="?action=follow-tag&amp;idTag=%d" style="margin-left: 15px; font-size: 1.2em; color: #00ff88;">[Suivre ce tag]</a>', $idTag);

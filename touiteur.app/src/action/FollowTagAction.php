@@ -17,7 +17,7 @@ class FollowTagAction extends Action
         }
 
         $repo = TouiterRepository::getInstance();
-        $idUser = 1;
+        $idUser = 333;
 
         if ($repo->estAbonneAuTag($idUser, $idTag)) {
             $repo->retirerAbonnementTag($idUser, $idTag);

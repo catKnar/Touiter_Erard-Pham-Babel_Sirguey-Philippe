@@ -10,7 +10,7 @@ class AfficherProfilAction extends Action
 
     public function execute(): string
     {
-        $u1 = new utilisateur(1, "Bob", "Eponge", "poisson@uni.fr", 0);
+        $u1 = new utilisateur(333, "Bob", "Eponge", "poisson@uni.fr", 0);
 
         $id = $u1->get('id_user');
         $nom = $u1->get('nom');
