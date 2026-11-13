@@ -45,7 +45,7 @@ class TouiteListRenderer implements Renderer
         }
         $retour .= "</ul>";
         $retour .= "<p>Total affiché : " . count($this->touites) . " touite(s)</p></div>";
-
+       
         return $retour;
     }
 }

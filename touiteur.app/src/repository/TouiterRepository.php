@@ -158,7 +158,7 @@ class TouiterRepository
         $query = "SELECT t.*, u.nom, u.prenom, u.email, u.nb_touite
               FROM touite t
               JOIN utilisateur u ON u.id_user = t.id_user
-              JOIN Hashtag tt ON tt.id_touite = t.id_touite
+              JOIN hashtag tt ON tt.id_touite = t.id_touite
               WHERE tt.id_tag = ?
               ORDER BY t.date DESC";
         $stmt = $this->getPDO()->prepare($query);
@@ -273,12 +273,26 @@ class TouiterRepository
     }
 
     //Fonctionnalité 11
-    public function tagAbonnement(int $id_user,int $id_tag){
-        {
-            $stmt = $this->getPDO()->prepare("Insert ignore into tag_abonnement values ($id_user,$id_tag)");
-            $stmt->execute();
-        }
+    public function tagAbonnement(int $id_user, int $id_tag): void {
+
+        $stmt = $this->getPDO()->prepare("INSERT IGNORE INTO tag_abonnement (id_user, id_tag) VALUES (?, ?)");
+        $stmt->execute([$id_user, $id_tag]);
     }
+
+    public function estAbonneAuTag(int $id_user, int $id_tag): bool {
+
+        $stmt = $this->getPDO()->prepare("SELECT 1 FROM tag_abonnement WHERE id_user = ? AND id_tag = ? LIMIT 1");
+        $stmt->execute([$id_user, $id_tag]);
+
+        return $stmt->fetchColumn() !== false;
+    }
+
+    public function retirerAbonnementTag(int $id_user, int $id_tag): void {
+
+        $stmt = $this->getPDO()->prepare("DELETE FROM tag_abonnement WHERE id_user = ? AND id_tag = ?");
+        $stmt->execute([$id_user, $id_tag]);
+    }
+
     //affichage d'une image par id 
     public function Affiche_image_par_id(int $id): ?Image
     {
